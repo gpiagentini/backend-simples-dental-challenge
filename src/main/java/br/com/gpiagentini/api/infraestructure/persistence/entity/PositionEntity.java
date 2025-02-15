@@ -2,15 +2,19 @@ package br.com.gpiagentini.api.infraestructure.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Foo")
+@Table(name = "cargos")
 @Getter
 @Setter
-public class FooDataMapper {
+@NoArgsConstructor
+public class PositionEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String description;
+    @Column(name = "nome")
+    private String name;
 }

@@ -13,18 +13,22 @@ public class SwaggerConfig {
     @Value("${application.name}")
     private String projectName;
 
-    @Bean
-    GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder()
-                .group("public-apis")
-                .pathsToMatch("/**")
-                .build();
-    }
+//    @Bean
+//    GroupedOpenApi publicApi() {
+//        return GroupedOpenApi.builder()
+//                .group("public-apis")
+//                .pathsToMatch("/**")
+//                .build();
+//    }
 
     @Bean
     OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title(projectName).version("V1"));
+                .info(new Info()
+                        .title(projectName)
+                        .version("1.0")
+                        .description("Simples Dental Challenge")
+                );
 //                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
 //                .components(
 //                        new Components()
