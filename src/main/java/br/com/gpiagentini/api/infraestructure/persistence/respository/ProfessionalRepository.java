@@ -1,11 +1,14 @@
 package br.com.gpiagentini.api.infraestructure.persistence.respository;
 
 import br.com.gpiagentini.api.application.dto.NewProfessionalData;
+import br.com.gpiagentini.api.application.dto.UpdateProfessionalData;
+import br.com.gpiagentini.api.application.port.out.IPositionRepository;
 import br.com.gpiagentini.api.application.port.out.IProfessionalRepository;
 import br.com.gpiagentini.api.domain.model.Professional;
 import br.com.gpiagentini.api.infraestructure.persistence.entity.PositionEntity;
 import br.com.gpiagentini.api.infraestructure.persistence.entity.ProfessionalEntity;
 import br.com.gpiagentini.api.infraestructure.persistence.mapper.ProfessionalMapper;
+import br.com.gpiagentini.api.infraestructure.persistence.respository.interfaces.ReferenceRepository;
 import br.com.gpiagentini.api.infraestructure.persistence.specifications.ProfessionalSpecifications;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +19,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Repository
-public class ProfessionalRepository implements IProfessionalRepository {
+public class ProfessionalRepository implements IProfessionalRepository, ReferenceRepository<ProfessionalEntity> {
 
     @Autowired
     private JpaProfessionalRepository jpaProfessionalRepository;
 
     @Autowired
-    private PositionRepository positionRepository;
+    private IPositionRepository positionRepository;
 
     @Autowired
     private ProfessionalMapper professionalMapper;
@@ -32,14 +36,12 @@ public class ProfessionalRepository implements IProfessionalRepository {
     @Override
     public String createNewProfessional(NewProfessionalData newProfessionalData) {
         var position = positionRepository.getPositionByName(newProfessionalData.position());
-        if (position == null)
-            throw new IllegalArgumentException("Cargo " + newProfessionalData.position() + " não é válido.");
         var newProfessional = new ProfessionalEntity(newProfessionalData.name(), newProfessionalData.bornDate(), position);
         return jpaProfessionalRepository.save(newProfessional).getId().toString();
     }
 
     @Override
-    public Professional getProfessionalById(Long id) {
+    public Professional getProfessionalById(Long id) throws NoSuchElementException {
         var entity = jpaProfessionalRepository.findById(id).orElseThrow();
         return professionalMapper.mapEntityToDomain(entity);
     }
@@ -56,11 +58,23 @@ public class ProfessionalRepository implements IProfessionalRepository {
     }
 
     @Override
-    public void updateProfessionalData(Professional professional) {
-        var entity = professionalMapper.mapDomainToEntity(professional);
+    public void updateProfessionalData(Long id, UpdateProfessionalData updateProfessionalData) {
+        var entity = getReferenceById(id);
+        if(updateProfessionalData.position() != null)
+            entity.setPosition(positionRepository.getPositionByName(updateProfessionalData.position()));
+        if(updateProfessionalData.name() != null)
+            entity.setName(updateProfessionalData.name());
+        if(updateProfessionalData.birthDate() != null)
+            entity.setBirthDate(updateProfessionalData.birthDate());
         jpaProfessionalRepository.save(entity);
     }
 
+    @Override
+    public ProfessionalEntity getReferenceById(Long id) throws IllegalArgumentException {
+        if (!jpaProfessionalRepository.existsById(id))
+            throw new IllegalArgumentException("Profissional com id " + id + " não existe.");
+        return jpaProfessionalRepository.getReferenceById(id);
+    }
 }
 
 interface JpaProfessionalRepository extends JpaRepository<ProfessionalEntity, Long>, JpaSpecificationExecutor<ProfessionalEntity> {

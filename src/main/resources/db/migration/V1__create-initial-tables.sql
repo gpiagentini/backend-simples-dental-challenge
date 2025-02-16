@@ -2,7 +2,7 @@ CREATE TABLE public.contatos (
     id serial NOT NULL,
 	nome varchar NOT NULL,
 	contato varchar NOT NULL,
-	created_date date NOT NULL,
+	created_date timestamp NOT NULL,
 	profissional int NOT NULL,
 	CONSTRAINT contatos_pk PRIMARY KEY (id)
 );

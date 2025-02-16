@@ -30,16 +30,13 @@ public class ProfessionalApplicationService implements IProfessionalApplicationS
     @Override
     public RetrieveProfessionalData getProfessionalById(Long id) {
         var professional = professionalRepository.getProfessionalById(id);
-        return new RetrieveProfessionalData(professional.getId(), professional.getName(), professional.getPosition(), professional.getBirthDate(), professional.getCreationDate(), professional.getActive());
+        return new RetrieveProfessionalData(professional);
     }
 
     @Override
     public List<RetrieveProfessionalData> getAllProfessionals(String searchText) {
         var professionalList = professionalRepository.getAllProfessionals(searchText);
-        return professionalList
-                .stream()
-                .map(professional -> new RetrieveProfessionalData(professional.getId(), professional.getName(), professional.getPosition(), professional.getBirthDate(), professional.getCreationDate(), professional.getActive()))
-                .toList();
+        return professionalList.stream().map(RetrieveProfessionalData::new).toList();
     }
 
     @Override
@@ -49,17 +46,9 @@ public class ProfessionalApplicationService implements IProfessionalApplicationS
     }
 
     @Override
+    @Transactional
     public void updateProfessionalData(Long id, UpdateProfessionalData updateProfessionalData) {
-        var professional = professionalRepository.getProfessionalById(id);
-
-        if(updateProfessionalData.position() != null)
-            professional.setPosition(updateProfessionalData.position());
-        if(updateProfessionalData.name() != null)
-            professional.setName(updateProfessionalData.name());
-        if(updateProfessionalData.birthDate() != null)
-            professional.setBirthDate(updateProfessionalData.birthDate());
-
-        professionalRepository.updateProfessionalData(professional);
+        professionalRepository.updateProfessionalData(id, updateProfessionalData);
     }
 
 

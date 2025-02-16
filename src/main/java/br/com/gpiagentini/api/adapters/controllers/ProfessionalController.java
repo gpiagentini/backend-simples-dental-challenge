@@ -1,28 +1,21 @@
 package br.com.gpiagentini.api.adapters.controllers;
 
-import br.com.gpiagentini.api.application.dto.RetrieveProfessionalData;
 import br.com.gpiagentini.api.application.dto.NewProfessionalData;
 import br.com.gpiagentini.api.application.dto.UpdateProfessionalData;
-import br.com.gpiagentini.api.application.dto.ValidationErrorData;
 import br.com.gpiagentini.api.application.port.in.IProfessionalApplicationService;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/profissionais")
@@ -73,35 +66,11 @@ public class ProfessionalController {
         return ResponseEntity.ok("Sucesso, profissional excluído");
     }
 
-    @Operation(summary = "Update professional informations")
+    @Operation(summary = "Atualizar dados de um profissional.")
     @PutMapping("/{id}")
     public ResponseEntity<String> updateProfessionalInfo(@PathVariable Long id, @Valid @RequestBody UpdateProfessionalData updateProfessionalData) {
         professionalApplicationService.updateProfessionalData(id, updateProfessionalData);
         return ResponseEntity.ok("Cadastro alterado.");
     }
 
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleIllegalArgumentException(IllegalArgumentException ex) {
-        return ex.getMessage();
-    }
-
-    @ExceptionHandler(NoSuchElementException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity handleNoSuchElementException() {
-        return ResponseEntity.notFound().build();
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public List<ValidationErrorData> handleInvalidMethodArgument(MethodArgumentNotValidException ex) {
-        return ex.getFieldErrors().stream().map(fieldError -> new ValidationErrorData(fieldError.getField(), fieldError.getDefaultMessage())).toList();
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public List<ValidationErrorData> handleConstraintViolation(ConstraintViolationException ex) {
-        return ex.getConstraintViolations().stream().map(constraintViolation -> new ValidationErrorData(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage())).toList();
-    }
 }

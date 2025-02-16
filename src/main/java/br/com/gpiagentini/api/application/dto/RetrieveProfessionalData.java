@@ -1,5 +1,6 @@
 package br.com.gpiagentini.api.application.dto;
 
+import br.com.gpiagentini.api.domain.model.Professional;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,4 +25,9 @@ public record RetrieveProfessionalData(
         @JsonProperty("ativo")
         Boolean active
 ) {
+    public RetrieveProfessionalData(Professional professional) {
+        this(professional.getId(), professional.getName(), professional.getPosition(), professional.getBirthDate(),
+                professional.getCreationDate(), professional.getActive());
+    }
+
 }

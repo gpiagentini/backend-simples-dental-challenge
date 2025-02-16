@@ -17,11 +17,4 @@ public class ProfessionalMapper {
         return new Professional(entity.getId(), entity.getName(), entity.getPosition().getName(), entity.getBirthDate(), entity.getCreatedDate(), entity.getActive());
     }
 
-    public ProfessionalEntity mapDomainToEntity(Professional professional) {
-        var position = positionRepository.getPositionByName(professional.getPosition());
-        if (position == null)
-            throw new IllegalArgumentException("Cargo " + professional.getPosition() + " não é válido.");
-        return new ProfessionalEntity(professional.getId(), professional.getName(), position, professional.getBirthDate(), professional.getCreationDate(), professional.getActive());
-    }
-
 }

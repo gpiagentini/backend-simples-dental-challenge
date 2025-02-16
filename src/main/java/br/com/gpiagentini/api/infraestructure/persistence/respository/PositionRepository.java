@@ -13,10 +13,12 @@ public class PositionRepository  implements IPositionRepository {
     private JpaPositionRepository jpaPositionRepository;
 
     @Override
-    public PositionEntity getPositionByName(String position) {
-        return jpaPositionRepository.findByName(position);
+    public PositionEntity getPositionByName(String position) throws IllegalArgumentException {
+        var positionEntity = jpaPositionRepository.findByName(position);
+        if (positionEntity == null)
+            throw new IllegalArgumentException("Cargo " + position + " não é válido.");
+        return positionEntity;
     }
-
 }
 
 interface JpaPositionRepository extends JpaRepository<PositionEntity, Long> {

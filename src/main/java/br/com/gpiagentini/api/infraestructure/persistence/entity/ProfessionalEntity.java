@@ -25,7 +25,7 @@ public class ProfessionalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     @Column(name = "nome")
     private String name;
     @OneToOne(cascade = CascadeType.ALL)
