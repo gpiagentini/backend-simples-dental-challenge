@@ -62,13 +62,13 @@ public class ContactController {
     @Operation(summary = "Excluir contato do profissional.")
     public ResponseEntity<String> deleteContactById(@PathVariable Long id) {
         contactApplicationService.deleteContactById(id);
-        return ResponseEntity.ok("Sucesso, profissional excluído");
+        return ResponseEntity.ok("Contato excluído.");
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Alterar dados de contato.")
     public ResponseEntity<String> updateContactById(@PathVariable Long id, @RequestBody UpdateContactData updateContactData) {
         contactApplicationService.updateContactInformation(id, updateContactData);
-        return ResponseEntity.ok("Contato alterado");
+        return ResponseEntity.ok("Contato alterado.");
     }
 }

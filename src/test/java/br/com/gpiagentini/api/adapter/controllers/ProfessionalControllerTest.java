@@ -1,6 +1,7 @@
 package br.com.gpiagentini.api.adapter.controllers;
 
 import br.com.gpiagentini.api.adapters.controllers.ProfessionalController;
+import br.com.gpiagentini.api.adapters.controllers.advisors.GlobalExceptionHandler;
 import br.com.gpiagentini.api.application.dto.NewProfessionalData;
 import br.com.gpiagentini.api.application.dto.RetrieveProfessionalData;
 import br.com.gpiagentini.api.application.dto.UpdateProfessionalData;
@@ -48,7 +49,9 @@ class ProfessionalControllerTest {
     void setUp() {
         objectMapper.registerModule(new JavaTimeModule());
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(professionalController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(professionalController)
+                .setControllerAdvice(GlobalExceptionHandler.class)
+                .build();
     }
 
     @Test
