@@ -1,13 +1,13 @@
 package br.com.gpiagentini.api.infraestructure.persistence.respository;
 
-import br.com.gpiagentini.api.application.port.out.IPositionRepository;
 import br.com.gpiagentini.api.infraestructure.persistence.entity.PositionEntity;
+import br.com.gpiagentini.api.infraestructure.persistence.respository.interfaces.PositionEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PositionRepository  implements IPositionRepository {
+public class PositionRepository implements PositionEntityRepository {
 
     @Autowired
     private JpaPositionRepository jpaPositionRepository;

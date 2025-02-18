@@ -2,15 +2,13 @@ package br.com.gpiagentini.api.infraestructure.persistence.respository;
 
 import br.com.gpiagentini.api.application.dto.NewProfessionalData;
 import br.com.gpiagentini.api.application.dto.UpdateProfessionalData;
-import br.com.gpiagentini.api.application.port.out.IPositionRepository;
 import br.com.gpiagentini.api.application.port.out.IProfessionalRepository;
 import br.com.gpiagentini.api.domain.model.Professional;
-import br.com.gpiagentini.api.infraestructure.persistence.entity.PositionEntity;
 import br.com.gpiagentini.api.infraestructure.persistence.entity.ProfessionalEntity;
 import br.com.gpiagentini.api.infraestructure.persistence.mapper.ProfessionalMapper;
+import br.com.gpiagentini.api.infraestructure.persistence.respository.interfaces.PositionEntityRepository;
 import br.com.gpiagentini.api.infraestructure.persistence.respository.interfaces.ReferenceRepository;
 import br.com.gpiagentini.api.infraestructure.persistence.specifications.ProfessionalSpecifications;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -28,7 +26,7 @@ public class ProfessionalRepository implements IProfessionalRepository, Referenc
     private JpaProfessionalRepository jpaProfessionalRepository;
 
     @Autowired
-    private IPositionRepository positionRepository;
+    private PositionEntityRepository positionRepository;
 
     @Autowired
     private ProfessionalMapper professionalMapper;

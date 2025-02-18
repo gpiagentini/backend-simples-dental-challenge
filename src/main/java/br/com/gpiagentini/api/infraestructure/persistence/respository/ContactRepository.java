@@ -42,11 +42,11 @@ public class ContactRepository implements IContactRepository, ReferenceRepositor
     }
 
     @Override
-    public Contact saveNewContact(NewContactData newContactData) {
+    public Long saveNewContact(NewContactData newContactData) {
         try {
             var professionalEntity = professionalReferenceRepository.getReferenceById(newContactData.idProfessional());
             var newContact = new ContactEntity(newContactData.name(), newContactData.contactData(), professionalEntity);
-            return contactMapper.mapEntityToDomain(jpaContactRepository.save(newContact));
+            return jpaContactRepository.save(newContact).getId();
         } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Profissional com o id " + newContactData.idProfessional() + " não existe.");
         }

@@ -32,8 +32,7 @@ public class ContactApplicationService implements IContactApplicationService {
     @Override
     @Transactional
     public Long saveNewContact(NewContactData newContactData) {
-        var newContact = contactRepository.saveNewContact(newContactData);
-        return newContact.getId();
+        return contactRepository.saveNewContact(newContactData);
     }
 
     @Override

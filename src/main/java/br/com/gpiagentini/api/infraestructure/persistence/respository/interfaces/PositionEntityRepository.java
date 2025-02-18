@@ -1,12 +1,12 @@
-package br.com.gpiagentini.api.application.port.out;
+package br.com.gpiagentini.api.infraestructure.persistence.respository.interfaces;
 
 import br.com.gpiagentini.api.infraestructure.persistence.entity.PositionEntity;
 
-public interface IPositionRepository {
+public interface PositionEntityRepository {
     /**
-     * Get a position by its name.
-     * 
-     * @param position to get.
+     * Get a position entity by its name.
+     *
+     * @param position name to fetch.
      * @return the position with the given name.
      * @throws IllegalArgumentException if the position does not exist.
      */
