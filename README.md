@@ -33,7 +33,7 @@ Temos duas formas de buscar as entidades:
 ### Alterar
 Podemos alterar os campos das entidade a partir do ID da entidade.
 
-Profissionaç
+Profissional
 ```
   "nome": string,
   "cargo": string,
