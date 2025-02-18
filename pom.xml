@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.gpiagentini</groupId>
-    <artifactId>api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>simples-dental-api</artifactId>
+    <version>1.0.0</version>
     <name>Simples Dental Backend Challenge</name>
     <description>Restful API from Simples Dental Backend Challenge</description>
     <url/>
