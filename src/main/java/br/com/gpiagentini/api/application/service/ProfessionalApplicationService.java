@@ -5,17 +5,17 @@ import br.com.gpiagentini.api.application.dto.RetrieveProfessionalData;
 import br.com.gpiagentini.api.application.dto.UpdateProfessionalData;
 import br.com.gpiagentini.api.application.port.in.IProfessionalApplicationService;
 import br.com.gpiagentini.api.application.port.out.IProfessionalRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component
 public class ProfessionalApplicationService implements IProfessionalApplicationService {
 
-    @Autowired
-    private IProfessionalRepository professionalRepository;
+    private final IProfessionalRepository professionalRepository;
+
+    public ProfessionalApplicationService(IProfessionalRepository professionalRepository) {
+        this.professionalRepository = professionalRepository;
+    }
 
     @Override
     @Transactional
