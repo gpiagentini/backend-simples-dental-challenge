@@ -5,9 +5,7 @@ import br.com.gpiagentini.api.application.dto.RetrieveContactData;
 import br.com.gpiagentini.api.application.dto.UpdateContactData;
 import br.com.gpiagentini.api.application.port.in.IContactApplicationService;
 import br.com.gpiagentini.api.application.port.out.IContactRepository;
-import br.com.gpiagentini.api.infraestructure.persistence.entity.ContactEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
