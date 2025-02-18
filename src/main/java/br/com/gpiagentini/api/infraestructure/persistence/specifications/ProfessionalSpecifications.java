@@ -1,13 +1,20 @@
 package br.com.gpiagentini.api.infraestructure.persistence.specifications;
 
-
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
-
 public class ProfessionalSpecifications {
 
+    private ProfessionalSpecifications() {
+    }
+
+    /**
+     * Search in every ProfessionalEntity field for the q.
+     * 
+     * @param q String to search.
+     * @return a specification.
+     */
     public static <T> Specification<T> searchByText(String q) {
         return (root, query, cb) -> {
             String search = "%" + q.toLowerCase() + "%";
@@ -18,7 +25,7 @@ public class ProfessionalSpecifications {
             // Name
             predicate = cb.or(predicate, cb.like(cb.lower(root.get("name")), search));
 
-            //position
+            // position
             Join<Object, Object> positionJoin = root.join("position");
             predicate = cb.or(predicate, cb.like(cb.lower(positionJoin.get("name")), search));
 

@@ -5,6 +5,15 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class ContactSpecification {
 
+    private ContactSpecification() {
+    }
+
+    /**
+     * Search in every ContactEntity field for the q.
+     * 
+     * @param q String to search.
+     * @return a specification.
+     */
     public static <T> Specification<T> searchByText(String q) {
         return (root, query, cb) -> {
             String search = "%" + q.toLowerCase() + "%";
